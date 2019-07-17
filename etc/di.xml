@@ -15,4 +15,8 @@
         <plugin name="addCustomAttributesToAddress"
                 type="\Netzexpert\LeaveParcel\Plugin\Customer\Model\Address\ConfigPlugin" />
     </type>
+    <type name="Magento\Sales\Api\Data\OrderInterface">
+        <plugin name="addLeaveParcelDataToOrderAddress"
+                type="Netzexpert\LeaveParcel\Plugin\Sales\OrderPlugin" />
+    </type>
 </config>
