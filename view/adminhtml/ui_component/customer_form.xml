@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="address">
+        <container name="customer_default_shipping_address_wrapper">
+            <component name="customer_default_shipping_address_content"
+                       template="Netzexpert_LeaveParcel/default-shipping-address" />
+        </container>
+    </fieldset>
+</form>

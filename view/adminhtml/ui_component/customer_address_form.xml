@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" component="Magento_Customer/js/form/components/form">
+    <fieldset name="general">
+        <field name="leave_parcel" sortOrder="900" component="Netzexpert_LeaveParcel/js/form/leave-parcel" />
+        <field name="leave_at" sortOrder="901" component="Netzexpert_LeaveParcel/js/form/leave-at" />
+        <field name="comment" sortOrder="902" component="Netzexpert_LeaveParcel/js/form/comment">
+            <settings>
+                <validation>
+                    <rule name="required-for-others" xsi:type="boolean">true</rule>
+                </validation>
+                <deps>
+                    <dep>customer_address_form.customer_address_form.general.leave_at</dep>
+                </deps>
+            </settings>
+        </field>
+    </fieldset>
+</form>

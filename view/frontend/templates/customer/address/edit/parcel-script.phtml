@@ -1,0 +1,39 @@
+<script>
+    require([
+        'jquery',
+        'mage/translate'
+    ], function ($, $t) {
+        var refreshElements = function(){
+            $('#leave_parcel').val(+$('#leave_parcel').prop('checked'));
+            var leave = parseInt($('#leave_parcel').val(), 10),
+                leaveAtField = $('#field-leave_at'),
+                commentField = $('#field-comment'),
+                elements = [leaveAtField, commentField];
+            if (!leave) {
+                $.each(elements, function(index, element){
+                    element.hide();
+                });
+            } else {
+                $.each(elements, function(index, element){
+                    element.show();
+                });
+            }
+        };
+
+        var refreshRequired = function(){
+            var commentField = $('#comment');
+            if ($("#leave_at").val() === $t('Other')) {
+                commentField.parents('.field.comment').addClass('_required');
+            } else {
+                commentField.parents('.field.comment').removeClass('_required');
+            }
+        };
+
+        $(document).ready(function(){
+            refreshElements();
+            refreshRequired();
+            $("#leave_parcel").on('change', refreshElements);
+            $("#leave_at").on('change', refreshRequired);
+        });
+    });
+</script>

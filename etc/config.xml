@@ -1,0 +1,11 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <leave_parcel>
+            <general>
+                <enabled>1</enabled>
+                <places>{"_1562593551710_710":{"place":"Garage","sortOrder":"10"},"_1562593551710_711":{"place":"Terrace","sortOrder":"20"}}</places>
+                <show_custom>1</show_custom>
+            </general>
+        </leave_parcel>
+    </default>
+</config>

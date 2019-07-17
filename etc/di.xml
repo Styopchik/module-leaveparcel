@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Netzexpert\LeaveParcel\Api\LeaveParcelDataInterface"
+                type="Netzexpert\LeaveParcel\Model\LeaveParcelData" />
+    <type name="Magento\Quote\Model\ShippingAddressManagement">
+        <plugin name="setLeaveParcelData"
+                type="Netzexpert\LeaveParcel\Plugin\ShippingAddressManagementInterfacePlugin"
+                sortOrder="1" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address\ToOrderAddress">
+        <plugin name="leaveParcel-convertQuoteAddress"
+                type="Netzexpert\LeaveParcel\Plugin\Quote\Address\ToOrderAddressPlugin" />
+    </type>
+    <type name="Magento\Customer\Model\Address\Config">
+        <plugin name="addCustomAttributesToAddress"
+                type="\Netzexpert\LeaveParcel\Plugin\Customer\Model\Address\ConfigPlugin" />
+    </type>
+</config>

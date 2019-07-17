@@ -1,0 +1,7 @@
+<?php
+use Netzexpert\LeaveParcel\Block\Customer\Address\Edit\LeaveParcelData;
+
+/** @var $block LeaveParcelData */
+foreach ($block->getAddress()->getCustomAttributes() as $customAttribute) {
+    echo $block->getAttributeInput($customAttribute);
+}

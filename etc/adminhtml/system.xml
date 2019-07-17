@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="netzexpert" translate="label" sortOrder="999999">
+            <label>Netzexpert</label>
+        </tab>
+        <section id="leave_parcel"
+                 type="text"
+                 translate="label"
+                 sortOrder="10"
+                 showInDefault="1"
+                 showInStore="1"
+                 showInWebsite="1">
+            <label>Leave parcel</label>
+            <tab>netzexpert</tab>
+            <resource>Netzexpert_LeaveParcel::config</resource>
+            <group id="general"
+                   translate="label"
+                   type="text"
+                   sortOrder="10"
+                   showInDefault="1"
+                   showInStore="1"
+                   showInWebsite="1">
+                <label>General</label>
+                <field id="enabled"
+                       translate="label"
+                       type="select"
+                       sortOrder="10"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1"
+                       canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="places"
+                       translate="label"
+                       type="text"
+                       sortOrder="15"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Available places to leave the parcel</label>
+                    <frontend_model>Netzexpert\LeaveParcel\Block\Adminhtml\Form\Field\Places</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="show_custom"
+                       translate="label"
+                       type="select"
+                       sortOrder="10"
+                       showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1"
+                       canRestore="1">
+                    <label>Show custom variant field</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,42 @@
+<script>
+    require([
+        "jquery",
+        'mage/translate'
+    ], function ($, $t) {
+        'use strict';
+
+        var refreshElements = function(){
+            var leave = parseInt($('#order-shipping_address_leave_parcel').val(), 10),
+                billingleaveAtField = $('[data-ui-id=billing-address-fieldset-element-form-field-leave-at]'),
+                shippingleaveAtField = $('[data-ui-id=shipping-address-fieldset-element-form-field-leave-at]'),
+                billingcommentField = $('[data-ui-id=billing-address-fieldset-element-form-field-comment]'),
+                shippingcommentField = $('[data-ui-id=shipping-address-fieldset-element-form-field-comment]'),
+                elements = [billingleaveAtField, shippingleaveAtField, billingcommentField, shippingcommentField];
+            if (!leave) {
+                $.each(elements, function(index, element){
+                    element.hide();
+                });
+            } else {
+                $.each(elements, function(index, element){
+                    element.show();
+                });
+            }
+        };
+
+        var refreshRequired = function(){
+            var commentField = $('#order-shipping_address_comment');
+            if ($("#order-shipping_address_leave_at").val() === $t('Other')) {
+                commentField.parents('.field-comment').addClass('_required');
+            } else {
+                commentField.parents('.field-comment').removeClass('_required');
+            }
+        };
+
+        $(document).ready(function(){
+            refreshElements();
+            refreshRequired();
+            $("[name$='[leave_parcel]'").on('change', refreshElements);
+            $("#order-shipping_address_leave_at").on('change', refreshRequired);
+        });
+    });
+</script>
