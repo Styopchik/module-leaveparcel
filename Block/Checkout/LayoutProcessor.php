@@ -10,6 +10,8 @@ namespace Netzexpert\LeaveParcel\Block\Checkout;
 use Magento\Checkout\Block\Checkout\LayoutProcessorInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Stdlib\ArrayManager;
+use Netzexpert\LeaveParcel\Model\Customer\Attribute\Source\Places;
 
 class LayoutProcessor implements LayoutProcessorInterface
 {
@@ -20,16 +22,31 @@ class LayoutProcessor implements LayoutProcessorInterface
     private $json;
 
     /**
+     * @var Places
+     */
+    private $placesModel;
+    /**
+     * @var ArrayManager
+     */
+    private $arrayManager;
+
+    /**
      * LayoutProcessor constructor.
      * @param ScopeConfigInterface $scopeConfig
+     * @param Places $placesModel
      * @param Json $json
+     * @param ArrayManager $arrayManager
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        Json $json
+        Places $placesModel,
+        Json $json,
+        ArrayManager $arrayManager
     ) {
         $this->scopeConfig  = $scopeConfig;
         $this->json         = $json;
+        $this->placesModel = $placesModel;
+        $this->arrayManager = $arrayManager;
     }
 
     /**
@@ -48,7 +65,6 @@ class LayoutProcessor implements LayoutProcessorInterface
                 'prefer' => 'checkbox'
             ],
             'dataScope' => 'shippingAddress.custom_attributes.leave_parcel',
-            'deps' => [/*'checkout.steps.shipping-step.shippingAddress.shipping-address-fieldset.leave_at'*/],
             'label' => __('Leave parcel'),
             'provider' => 'checkoutProvider',
             'visible' => true,
@@ -82,7 +98,7 @@ class LayoutProcessor implements LayoutProcessorInterface
             'additionalClasses' => 'leave-at',
             'sortOrder' => 160,
             'visible' => false,
-            'options' => $this->getOptionsArray()
+            'options' => $this->placesModel->getAllOptions()
         ];
         if ($this->scopeConfig->getValue('leave_parcel/general/show_custom')) {
             $jsLayout["components"]["checkout"]["children"]["steps"]["children"]["shipping-step"]["children"]["shippingAddress"]["children"]["shipping-address-fieldset"]["children"]['comment'] = [
@@ -102,28 +118,12 @@ class LayoutProcessor implements LayoutProcessorInterface
 
             ];
         }
+        // to remove Leave parcel attributes from billing address form in checkout
+        $path = $this->arrayManager->findPath('form-fields', $jsLayout);
+        $fields = ['leave_parcel', 'leave_at', 'comment'];
+        foreach ($fields as $field) {
+            $jsLayout = $this->arrayManager->remove($path . '/children/' . $field, $jsLayout);
+        }
         return $jsLayout;
     }
-
-    /**
-     * @return array
-     */
-    private function getOptionsArray()
-    {
-        $options = $this->json->unserialize(
-            $this->scopeConfig->getValue('leave_parcel/general/places')
-        );
-        $sortOrder = array_column($options, 'sortOrder');
-        array_multisort($sortOrder, SORT_ASC, $options);
-        $optionsArray = [];
-        foreach ($options as $option) {
-            if (empty($option['place'])) {
-                continue;
-            }
-            $optionsArray[] = ['value' => $option['place'], 'label' => $option['place']];
-        }
-        $optionsArray[] = ['value' => __('Other'), 'label' => __('Other')];
-        return $optionsArray;
-    }
-
 }

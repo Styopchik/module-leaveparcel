@@ -37,8 +37,9 @@ class Places extends AbstractSource
      */
     public function getAllOptions()
     {
+        $configValue = $this->scopeConfig->getValue('leave_parcel/general/places');
         $options = $this->json->unserialize(
-            $this->scopeConfig->getValue('leave_parcel/general/places')
+            ($configValue) ? $configValue : '{}'
         );
         $sortOrder = array_column($options, 'sortOrder');
         array_multisort($sortOrder, SORT_ASC, $options);
